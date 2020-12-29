@@ -1,0 +1,8 @@
+Create PHP file browser demo:
+          -ability to see files/directories                              Done 
+          -ability to enter directory                                    Done
+          -back button(return back from directory if entered)            Done---> Not working properly--->In progress--->Fixed?
+          -delete button(to delete just files)                           Done
+          -ability to download/upload files                              Not finished yet
+          -authentication mechanism(LOGIN/LOGOUT)                        Done
+          -minimal css                                                   In progress
