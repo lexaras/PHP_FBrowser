@@ -1,0 +1,98 @@
+h1 {
+    margin-left: 5vw;
+}
+h4{
+    position: fixed;
+    margin-left: 7vh;
+    margin-top: 17vh;
+}
+table {
+    width: 89vw;
+    margin: auto;
+    background-color: rgb(189, 184, 184);
+    border-collapse: collapse;
+}
+
+th {
+    font-size: 1.5em;
+    background-color: green;
+    border: 2px solid #81b29a;
+    color: white;
+}
+
+td {
+    font-size: 1.5em;
+    text-align: center;
+    height: 1.5em;
+    width: calc(100% / 3);
+}
+
+tr:nth-of-type(even) {
+    background-color: white;
+}
+
+a:link {
+    text-decoration: underline;
+    width: 100%;
+    color: blue;
+}
+a:hover {
+    color: red;
+}
+
+button {
+    margin-left: 5vw;
+    margin-top: 1vw;
+    width: 250px;
+    padding: 0.5vw;
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+#submit {
+    width: 80px;
+    margin-left: 0;
+    padding: 0.5vw;
+}
+
+#input {
+    margin-left: 5vw;
+    padding: 0.5vw;
+    text-align: center;
+    width: 150px;
+
+}
+
+#login {
+    width: 30vh;
+    height: 20vh;
+    background-color: cornsilk;
+    margin-top: 15vh;
+    margin-left: 5vh;
+    border: 3px solid black;
+    text-align: center;
+}
+
+#login>input {
+    margin-top: 2vh;
+    padding: 4px 4px;
+}
+
+.button1{
+    margin-top: 1vw;
+    width: 10vw;
+    padding: .25vw;
+    margin-left:0;
+    font-weight: 700;
+    color: green;
+}
+
+.logout {
+    position: absolute;
+    font-size: large;
+    font-weight: 700;
+    margin-left: 80%;
+    margin-top: -8vh;
+}
