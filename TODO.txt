@@ -3,6 +3,6 @@ Create PHP file browser demo:
           -ability to enter directory                                    Done
           -back button(return back from directory if entered)            Done---> Not working properly--->In progress--->Fixed?
           -delete button(to delete just files)                           Done
-          -ability to download/upload files                              Not finished yet
+          -ability to download/upload files                              Not finished yet--->Upload DONE ---> Download in progress
           -authentication mechanism(LOGIN/LOGOUT)                        Done
-          -minimal css                                                   In progress
+          -minimal css                                                   In progress---> Small upgrades, login box need some fixes

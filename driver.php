@@ -13,6 +13,27 @@ print('<div class="logout">Click here to <a href="index.php?action=logout"> logo
     </thead>
     <tbody>
         <?php
+        if (isset($_FILES['image'])) {
+            $errors = array();
+            $file_name = $_FILES['image']['name'];
+            $file_size = $_FILES['image']['size'];
+            $file_tmp = $_FILES['image']['tmp_name'];
+            $file_type = $_FILES['image']['type'];
+            // check extension (and only permit jpegs, jpgs and pngs)
+            $file_ext = strtolower(end(explode('.', $_FILES['image']['name'])));
+            $extensions = array("jpeg", "jpg", "png", "txt");
+            if (in_array($file_ext, $extensions) === false) {
+                $errors[] = "extension not allowed, please choose a JPEG or PNG file.";
+            }
+            if ($file_size > 2097152) {
+                $errors[] = 'File size must be excately 2 MB';
+            }
+            if (empty($errors) == true) {
+                move_uploaded_file($file_tmp, $_GET['path'] . "./" . $file_name);
+            } else {
+                print_r($errors);
+            }
+        }
         //Display cwd(current working directory) files and directories
         if (!isset($_GET['path']) && !isset($_POST['new_dir']) && empty($_POST)) {
             $dir = getcwd();
@@ -61,16 +82,23 @@ $previous_dir = dirname($current_dir);
 print("<button><a href='$previous_dir'>Back</a></button>");
 //history.back(1)- not working properly when making new dir
 //print('<button type="button" onclick="history.back(1);">Back</button>'); 
+
 //New directory input + button fields
 print("<form action=''method='POST'><input type='text' name='new_dir' 
 id='input' placeholder='Name of new directory'><button id='submit'>Submit</button></form>");
-
 ?>
 
+<!-- Upload file form and -->
+<form action="" method="POST" enctype="multipart/form-data">
+    <input id='upl_buttons' type="file" name="image" />
+    <br>
+    <input id='upl_buttons' type="submit" value="Upload file" />
+</form>
 
 
-<!-- Functions -- !>
 <?php
+//Functions
+
 //Looping through array of files/directories and displaying each 
 //into the table with a single if condition(whether its file or dir)
 function display($files_directories)
