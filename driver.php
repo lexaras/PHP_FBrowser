@@ -13,27 +13,6 @@ print('<div class="logout">Click here to <a href="index.php?action=logout"> logo
     </thead>
     <tbody>
         <?php
-        if (isset($_FILES['image'])) {
-            $errors = array();
-            $file_name = $_FILES['image']['name'];
-            $file_size = $_FILES['image']['size'];
-            $file_tmp = $_FILES['image']['tmp_name'];
-            $file_type = $_FILES['image']['type'];
-            // check extension (and only permit jpegs, jpgs and pngs)
-            $file_ext = strtolower(end(explode('.', $_FILES['image']['name'])));
-            $extensions = array("jpeg", "jpg", "png", "txt");
-            if (in_array($file_ext, $extensions) === false) {
-                $errors[] = "extension not allowed, please choose a JPEG or PNG file.";
-            }
-            if ($file_size > 2097152) {
-                $errors[] = 'File size must be excately 2 MB';
-            }
-            if (empty($errors) == true) {
-                move_uploaded_file($file_tmp, $_GET['path'] . "./" . $file_name);
-            } else {
-                print_r($errors);
-            }
-        }
         //Display cwd(current working directory) files and directories
         if (!isset($_GET['path']) && !isset($_POST['new_dir']) && empty($_POST)) {
             $dir = getcwd();
@@ -43,6 +22,49 @@ print('<div class="logout">Click here to <a href="index.php?action=logout"> logo
             // print_r($files_directories);
             display($files_directories);
         };
+        //File upload functionality
+        if (isset($_FILES['image'])) {
+            $errors = array();
+            $file_name = $_FILES['image']['name'];
+            $file_size = $_FILES['image']['size'];
+            $file_tmp = $_FILES['image']['tmp_name'];
+            $file_type = $_FILES['image']['type'];
+            $dir = getcwd();
+            $files_directories = scandir($dir);
+            // check extension (and only permit jpegs, jpgs, pngs, pdfs, txt)
+            $file_ext = strtolower(end(explode('.', $_FILES['image']['name'])));
+            $extensions = array("jpeg", "jpg", "png", "txt", "pdf");
+            if (in_array($file_ext, $extensions) === false) {
+                echo '<script>alert("Extension not allowed, please choose different file")</script>';
+            }
+            if ($file_size > 2097152) {
+                echo '<script>alert("File size must be less than 2 MB")</script>';
+            }
+            if (file_exists($file_name)) {
+                echo '<script>alert("File with the same name already exists")</script>';
+            }
+            if (empty($errors) == true) {
+                move_uploaded_file($file_tmp, $_GET['path'] . "./" . $file_name);
+            }
+        }
+        // file download logic
+        if (isset($_POST['download'])) {
+            $file = './' . $_GET["path"] . $_POST['download'];
+            $fileToDownloadEscaped = str_replace("&nbsp;", " ", htmlentities($file, null, 'utf-8'));
+            ob_clean();
+            ob_start();
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/pdf');
+            header('Content-Disposition: attachment; filename=' . basename($fileToDownloadEscaped));
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($fileToDownloadEscaped));
+            ob_end_flush();
+            readfile($fileToDownloadEscaped);
+            exit;
+        }
         //Navigate between folders if path has changed and display cwd again
         if (isset($_GET) && $_GET['path'] != "") {
             $current_dir = $_GET['path'];
@@ -54,23 +76,40 @@ print('<div class="logout">Click here to <a href="index.php?action=logout"> logo
             navigate($files_directories, $url);
         }
         //Create new directory
-        if (isset($_POST['new_dir']) && $_POST['new_dir'] != "") {
+        if (isset($_POST['new_dir'])) {
+            if($_POST['new_dir'] != "" && (!file_exists($_POST['new_dir']))){
             $dir = getcwd();
             //print($dir);
             mkdir($dir . '/' . $_POST['new_dir']);
             header('Location: ' . $_SERVER['REQUEST_URI']);
             $files_directories = scandir($dir);
             display($files_directories);
+            } else{
+                echo '<script>alert("File with the same name already exists or the input field is empty")</script>';
+                $dir = getcwd();
+                $files_directories = scandir($dir);
+                display($files_directories);
+            }
         };
         //Delete file
         if (!empty($_POST) && !isset($_POST['new_dir'])) {
             $file_name = str_replace("_", ".", array_keys($_POST)[0]);
-            // print($file_name);
-            unlink($file_name);
-            header('Location: ' . $_SERVER['REQUEST_URI']);
-            $dir = getcwd();
-            $files_directories = scandir($dir);
-            display($files_directories);
+            if (($file_name != 'css') && ($file_name != 'driver.php') && ($file_name != 'index.php') &&
+                ($file_name != 'README.md') && ($file_name != 'TODO.txt') && ($file_name != 'normalize.css')
+                && ($file_name != 'style.css')
+            ) {
+                // print($file_name);
+                unlink($file_name);
+                header('Location: ' . $_SERVER['REQUEST_URI']);
+                $dir = getcwd();
+                $files_directories = scandir($dir);
+                display($files_directories);
+            } else {
+                echo '<script>alert("This file cannot be deleted! ")</script>';
+                $dir = getcwd();
+                $files_directories = scandir($dir);
+                display($files_directories);
+            }
         }
         ?>
     </tbody>
@@ -79,7 +118,7 @@ print('<div class="logout">Click here to <a href="index.php?action=logout"> logo
 //Back button
 $current_dir = $_SERVER['REQUEST_URI'];
 $previous_dir = dirname($current_dir);
-print("<button><a href='$previous_dir'>Back</a></button>");
+print("<button class='back_button'><a href='$previous_dir'>Back</a></button>");
 //history.back(1)- not working properly when making new dir
 //print('<button type="button" onclick="history.back(1);">Back</button>'); 
 
@@ -97,6 +136,7 @@ id='input' placeholder='Name of new directory'><button id='submit'>Submit</butto
 
 
 <?php
+
 //Functions
 
 //Looping through array of files/directories and displaying each 
@@ -107,7 +147,11 @@ function display($files_directories)
         if ($each != '.' && $each != '..')
             if (is_dir($each)) {
                 print("<tr><td>Folder</td><td><a href='?path=$each'>" . $each . "</a></td><td></td></tr>");
-            } else print("<tr><td>File</td><td>" . $each . "</a></td><td><form method='POST'><input type='submit' name='$each' value='Delete'></form></td></tr>");
+            } else print("<tr><td>File</td><td>" . $each . "</a></td><td><form method='POST'><input type='submit' name='$each' value='Delete'></form>
+            <form action='' method='post' class='buttonsform'>
+            <input class='hide' name='download' value='.$each.'>
+            <button type='submit' class='myButton id='download'>Download</button>
+            </form></td></tr>");
     };
 };
 function navigate($files_directories, $url)
@@ -116,7 +160,9 @@ function navigate($files_directories, $url)
         if ($each != '.' && $each != '..')
             if (is_dir($each)) {
                 print("<tr><td>Folder</td><td><a href='$url/$each'>" . $each . "</a></td><td></td></tr>");
-            } else print("<tr><td>File</td><td>" . $each . "</a></td><td><form method='POST'><input type='submit' name='$each' value='Delete'></form></td></tr><br>");
+            } else print("<tr><td>File</td><td>" . $each . "</a></td><td><form method='POST'><input type='submit' name='$each' value='Delete'></form>
+        <form  method='POST' class='buttonsform'><input class='hide' name='download' value='.$each.'>
+    <button type='submit' class='myButton' id='download'>Download</button></form></td></tr><br>");
     };
 }
 ?>

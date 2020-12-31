@@ -6,3 +6,8 @@ Create PHP file browser demo:
           -ability to download/upload files                              Not finished yet--->Upload DONE ---> Download in progress
           -authentication mechanism(LOGIN/LOGOUT)                        Done
           -minimal css                                                   In progress---> Small upgrades, login box need some fixes
+TODO:
+DOWNLOAD IS NOT WORKING PROPERLY
+BACK BUTTON FIX NEEDED(DO NOT ALLOW TO BACK INTO LOCAL HOST)
+STYLING NEEDED
+UPDATE README.MD file

@@ -101,3 +101,13 @@ button {
     margin-left: 80%;
     margin-top: -8vh;
 }
+.hide{
+    visibility: hidden;
+}
+.back_button{
+    margin-left: 5vw;
+    margin-top: 1vh;
+}
+form.buttonsform{
+    margin-left: -15vw;
+}
