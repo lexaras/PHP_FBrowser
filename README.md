@@ -5,9 +5,9 @@ Browser features:
 - Logout
 - Browse directories
 - Create new directory
-- Delete files (do not delete core files (index.php/style.css))
+- Delete files (core files are protected)
 - Download files
-- Upload files (.txt only)
+- Upload files(only permit jpegs, jpgs, pngs, pdfs, txt and the size should be > 2mb)
 
 
 How to use it:
