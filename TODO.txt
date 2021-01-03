@@ -1,13 +1,13 @@
 Create PHP file browser demo:
-          -ability to see files/directories                              Done 
-          -ability to enter directory                                    Done
-          -back button(return back from directory if entered)            Done---> Not working properly--->In progress--->Fixed?
-          -delete button(to delete just files)                           Done
-          -ability to download/upload files                              Not finished yet--->Upload DONE ---> Download in progress
-          -authentication mechanism(LOGIN/LOGOUT)                        Done
-          -minimal css                                                   In progress---> Small upgrades, login box need some fixes
+          -ability to see files/directories                       Done 
+          -ability to enter directory                             Done
+          -back button(return back from directory if entered)     Done---> Not working properly--->In progress--->Fixed?
+          -delete button(to delete just files)                    Done
+          -ability to download/upload files                       Not finished yet--->Upload DONE ---> Download in progress--->Done
+          -authentication mechanism(LOGIN/LOGOUT)                 Done
+          -minimal css                                            In progress---> Small upgrades, login box need some fixes
 TODO:
-DOWNLOAD IS NOT WORKING PROPERLY
+DOWNLOAD IS NOT WORKING PROPERLY        FIXED(not completely)
 BACK BUTTON FIX NEEDED(DO NOT ALLOW TO BACK INTO LOCAL HOST)
-STYLING NEEDED
-UPDATE README.MD file
+STYLING NEEDED                         In progress
+UPDATE README.MD file                  Done

@@ -13,15 +13,6 @@ print('<div class="logout">Click here to <a href="index.php?action=logout"> logo
     </thead>
     <tbody>
         <?php
-        //Display cwd(current working directory) files and directories
-        if (!isset($_GET['path']) && !isset($_POST['new_dir']) && empty($_POST)) {
-            $dir = getcwd();
-            // print_r($dir);
-            $files_directories = scandir($dir);
-            // print('<br>');
-            // print_r($files_directories);
-            display($files_directories);
-        };
         //File upload functionality
         if (isset($_FILES['image'])) {
             $errors = array();
@@ -49,7 +40,7 @@ print('<div class="logout">Click here to <a href="index.php?action=logout"> logo
         }
         // file download logic
         if (isset($_POST['download'])) {
-            $file = './' . $_GET["path"] . $_POST['download'];
+            $file='./' . $_POST['download'];
             $fileToDownloadEscaped = str_replace("&nbsp;", " ", htmlentities($file, null, 'utf-8'));
             ob_clean();
             ob_start();
@@ -65,6 +56,15 @@ print('<div class="logout">Click here to <a href="index.php?action=logout"> logo
             readfile($fileToDownloadEscaped);
             exit;
         }
+        //Display cwd(current working directory) files and directories
+        if (!isset($_GET['path']) && !isset($_POST['new_dir']) && empty($_POST)) {
+            $dir = getcwd();
+            // print_r($dir);
+            $files_directories = scandir($dir);
+            // print('<br>');
+            // print_r($files_directories);
+            display($files_directories);
+        };
         //Navigate between folders if path has changed and display cwd again
         if (isset($_GET) && $_GET['path'] != "") {
             $current_dir = $_GET['path'];
@@ -149,7 +149,7 @@ function display($files_directories)
                 print("<tr><td>Folder</td><td><a href='?path=$each'>" . $each . "</a></td><td></td></tr>");
             } else print("<tr><td>File</td><td>" . $each . "</a></td><td><form method='POST'><input type='submit' name='$each' value='Delete'></form>
             <form action='' method='post' class='buttonsform'>
-            <input class='hide' name='download' value='.$each.'>
+            <input class='hide' name='download' value='$each'>
             <button type='submit' class='myButton id='download'>Download</button>
             </form></td></tr>");
     };
@@ -161,7 +161,7 @@ function navigate($files_directories, $url)
             if (is_dir($each)) {
                 print("<tr><td>Folder</td><td><a href='$url/$each'>" . $each . "</a></td><td></td></tr>");
             } else print("<tr><td>File</td><td>" . $each . "</a></td><td><form method='POST'><input type='submit' name='$each' value='Delete'></form>
-        <form  method='POST' class='buttonsform'><input class='hide' name='download' value='.$each.'>
+        <form  method='POST' class='buttonsform'><input class='hide' name='download' value='$each'>
     <button type='submit' class='myButton' id='download'>Download</button></form></td></tr><br>");
     };
 }
