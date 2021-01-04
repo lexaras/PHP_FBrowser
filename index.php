@@ -25,7 +25,7 @@
             $_SESSION['timeout'] = time();
             $_SESSION['username'] = "Benas";
         } else {
-            print('<h4> Wrong username or password</h4>');
+            print('<h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Wrong username or password</h4>');
         }
     }
     ?>
@@ -46,9 +46,11 @@
         } else {
         ?>
             <form id="login" action="./index.php" method="post">
+                <p> <img src="css/images.png" >Sign up  </p>
                 <input type="text" name="username" placeholder="username = Benas" required autofocus></br>
                 <input type="password" name="password" placeholder="password = 12345" required>
                 <button class="button1" type="submit" name="login">Login</button>
+                
             <?php } ?>
     </div>
 </body>
