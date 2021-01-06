@@ -25,7 +25,7 @@
             $_SESSION['timeout'] = time();
             $_SESSION['username'] = "Benas";
         } else {
-            print('<h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Wrong username or password</h4>');
+            print('<h4 id="h1ID"> Wrong username or password</h4>');
         }
     }
     ?>

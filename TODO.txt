@@ -6,13 +6,5 @@ Create PHP file browser demo:
           -ability to download/upload files                              Not finished yet--->Upload DONE ---> Download in progress--->Fixed?
           -authentication mechanism(LOGIN/LOGOUT)                        Done
           -minimal css                                                   In progress---> Small upgrades, login box need some fixes--->Done?
-TODO:
-DOWNLOAD IS NOT WORKING PROPERLY       FIXED
-STYLING NEEDED                   KINDA FIXED
-UPDATE README.MD file                  FIXED
 
-TODO for job interviews:
-SASS > style.css
-BACK BUTTON functionality
-Dragging files to upload them
-Supporting/Excepting files
+
