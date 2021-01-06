@@ -15,8 +15,8 @@ Copy repository URL and open it with the code editor, save the project to the ro
 
 
 TODO(extra future upgrades):
-SASS > style.css(del img, think about responsive design?)
-BACK BUTTON functionality(do not allow to back into localhost dir)
-Dragging files to upload them
-Supporting/Excepting files(catch erorrs for unsupported files/logins etc)
-Think about more functionality
+-SASS > style.css(del img, think about responsive design?)
+-BACK BUTTON functionality(do not allow to back into localhost dir)
+-Dragging files to upload them
+-Supporting/Excepting files(catch erorrs for unsupported files/logins etc)
+-Think about more functionality
